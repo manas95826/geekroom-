@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 // import JoinCta from "@/components/ui/JoinCta";
 import EventHero from "@/components/events/EventHero";
 import EventTicket from "@/components/events/EventTicket";
-import { events, eventsByDate, getEvent } from "@/data/events";
+import { events, eventsByDate, getEvent, kindLabel } from "@/data/events";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -29,7 +29,7 @@ export default async function EventPage({ params }: Props) {
   const meta = [
     { label: "Date", value: event.date ?? "To be announced" },
     { label: "Venue", value: event.location ?? event.city },
-    { label: "Format", value: event.kind },
+    { label: "Format", value: kindLabel(event) },
   ];
 
   return (

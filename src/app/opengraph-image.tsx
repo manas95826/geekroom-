@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { EYES, LEFT, MARK_COLORS, RIGHT, SLASH, STROKE_W, toPath, VIEWBOX } from "@/lib/geekmark";
 
 // Link-preview card shown when the site is shared on X, LinkedIn, Discord, WhatsApp, etc.
-export const alt = "Geek Room — India's builder community";
+export const alt = "Geek Room — the global builder community";
 // Rendered at 2× the standard 1200×630 so text stays crisp after platforms downscale and recompress it
 const S = 2;
 export const size = { width: 1200 * S, height: 630 * S };
@@ -57,7 +57,7 @@ export default async function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 120 * S, fontWeight: 800, lineHeight: 1, letterSpacing: -2 * S }}>GEEK ROOM</div>
           <div style={{ marginTop: 24 * S, fontSize: 40 * S, color: "#ff5a1f" }}>
-            150K+ builders · 400+ colleges
+            150K+ builders · 80+ partner companies
           </div>
         </div>
       </div>

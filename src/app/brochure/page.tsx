@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const images = "/images/brochure";
 
 const reasons = [
-  "Reach 150,000+ student developers",
+  "Reach 150,000+ developers worldwide",
   "Build awareness among Gen Z developers",
   "Hire engineers through hackathons",
   "Run API adoption campaigns",
@@ -130,7 +130,7 @@ export default function BrochurePage() {
           <div className="brochure-hero-copy">
             <p className="brochure-eyebrow">Partnerships · Geek Room</p>
             <h1>Partner with <em>Geek Room.</em></h1>
-            <p>Geek Room helps companies reach, engage and hire from a community of 150K+ developers across 400+ colleges through hackathons, campaigns, product activations and skills-based hiring challenges.</p>
+            <p>Geek Room helps companies reach, engage and hire from a global community of 150K+ developers, founders and engineers through hackathons, campaigns, product activations and skills-based hiring challenges.</p>
             <div className="brochure-actions">
               <a className="brochure-button brochure-button-primary" href="#partnerships">Explore partnerships <span aria-hidden>↗</span></a>
               <a className="brochure-button brochure-button-outline" href="/global-hackathon-geekroom.pdf" download>Download PDF <span aria-hidden>↓</span></a>

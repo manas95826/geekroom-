@@ -36,15 +36,15 @@ export default function Footer() {
 
   return (
     <footer ref={root} className="site-footer relative overflow-hidden border-t border-line bg-ink-2">
-      <div className="shell grid gap-12 pt-20 pb-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div className="shell grid gap-12 pt-20 pb-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr]">
         <div>
           <Link href="/" className="flex items-center gap-3">
             <GeekMark className="h-8 w-auto" />
             <span className="font-display text-lg font-bold uppercase">Geek Room</span>
           </Link>
           <p className="mt-5 max-w-[320px] text-sm leading-relaxed text-muted">
-            A nationwide builder community: hackathons, meetups and hiring challenges for 150K+ builders across 400+
-            colleges.
+            A global builder community: hackathons, vibe-a-thons, meetups and hiring challenges for 150K+ developers,
+            founders and companies.
           </p>
           <div className="mt-6 flex gap-2">
             {socials.map(({ href, label, Icon }) => (

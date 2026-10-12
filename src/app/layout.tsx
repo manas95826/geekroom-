@@ -31,12 +31,12 @@ export const metadata: Metadata = {
     template: "%s | Geek Room",
   },
   description:
-    "Geek Room is a nationwide builder community of 150K+ developers across 400+ colleges, running hackathons, meetups and hiring challenges.",
+    "Geek Room is a global builder community of 150K+ developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.",
   openGraph: {
     type: "website",
     title: "Geek Room",
     description:
-      "Geek Room is a nationwide builder community of 150K+ developers across 400+ colleges, running hackathons, meetups and hiring challenges.",
+      "Geek Room is a global builder community of 150K+ developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.",
   },
   twitter: {
     card: "summary_large_image",

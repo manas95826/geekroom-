@@ -32,7 +32,7 @@ export default function Chapters() {
             20+ campus <em>chapters</em>
           </>
         }
-        intro="Geek Room runs locally too. Each chapter hosts its own hackathons, workshops and talks, and plugs its campus into the wider network."
+        intro="Online, Geek Room is open to builders anywhere. Offline, local chapters host their own hackathons, workshops and talks, and plug into the wider network."
       />
 
       <ol className="mt-14 border-b border-line">

@@ -56,7 +56,7 @@ export default function Story() {
               Learn. Connect. <em>Grow.</em>
             </>
           }
-          intro="What began as a WhatsApp group at MSIT is now where students across India come to hack, ship, and meet the people building the industry."
+          intro="What began as a WhatsApp group at MSIT is now a global builder community, where developers, founders and companies come to hack, ship, and meet the people building the industry."
         />
         <ol className="mt-10 hidden border-t border-line lg:block">
           {features.map((f, i) => (

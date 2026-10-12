@@ -112,7 +112,7 @@ export default function FeaturedEvents() {
               Events on the <em>track</em>
             </>
           }
-          intro={`From meetups and roadshows to campaigns, hackathons, events, and dedicated promotions, we handle it all. Explore our latest ${track.length} editions across ${cities} cities.`}
+          intro={`From global online hackathons and vibe-a-thons to in-person finales, meetups, campaigns and dedicated promotions, we handle it all. Explore our latest ${track.length} editions across ${cities} cities.`}
         />
         <Link href="/event" className="btn-ghost shrink-0 self-start md:self-auto">
           Check Out our Events <ArrowUpRight className="size-3.5" />

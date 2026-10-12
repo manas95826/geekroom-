@@ -1,3 +1,5 @@
+import { kindSlug } from "@/data/events";
+
 export const site = {
   name: "Geek Room",
   email: "team@geekroom.co.in",
@@ -35,6 +37,16 @@ export const footerColumns = [
       { label: "Code Kshetra", href: "/event/ck2.0" },
     ],
   },
+  {
+    title: "Categories",
+    links: [
+      { label: "Hackathons", href: `/event?category=${kindSlug("Hackathon")}` },
+      { label: "Global Hackathons", href: `/event?category=${kindSlug("Global Hackathon")}` },
+      { label: "Vibe-a-thons", href: `/event?category=${kindSlug("Vibe-a-thon")}` },
+      { label: "Meetups", href: `/event?category=${kindSlug("Meetup")}` },
+      { label: "Hiring", href: `/event?category=${kindSlug("Hiring")}` },
+    ],
+  },
 ];
 
 export const heroImages = [
@@ -49,7 +61,7 @@ export const heroImages = [
 export const features = [
   {
     title: "Join 150K+ builders",
-    body: "Be part of a network of 150K+ developers, students, founders and professionals across 400+ colleges and 20+ campus chapters who hack, build and grow together.",
+    body: "Be part of a global network of 150K+ developers, founders, engineers and students who hack, build and grow together: online from anywhere, and in person at partner offices.",
     image: "/images/home/developers.jpg",
   },
   {
@@ -59,7 +71,7 @@ export const features = [
   },
   {
     title: "Network with the best people in industry",
-    body: "Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted finales at Microsoft, Mastercard and Paytm, and worked with 80+ companies including Google, Meta, Groq, Qdrant, Pathway, Vapi and Oracle.",
+    body: "Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted finales at Microsoft, Mastercard and Paytm, and worked with 80+ companies including Google, Meta, GitHub, Groq, Qdrant, Pathway, Vapi and Oracle.",
     image: "/images/home/network.jpg",
   },
 ];
@@ -90,13 +102,13 @@ export const partners: Partner[] = [
 export const services = [
   {
     title: "Hiring Challenges",
-    body: "Run hiring challenges with us and move past old-school recruitment, and evaluate candidates on the real skills that make them right for your team, like our Hire-A-Thon with InvoLead.",
+    body: "Run hiring challenges with us and move past old-school recruitment, and evaluate candidates on the real skills that make them right for your team, like our Hire-A-Thon with InvoLead and HackSmart with Battery Smart.",
   },
   {
     title: "Exclusive Hackathons",
     body: "Host an exclusive hackathon with Geek Room, like our finales at Microsoft, Mastercard and Paytm, and get strong branding and engagement across 10+ media channels.",
     proof: [
-      { value: "1,50,000+", label: "Community members" },
+      { value: "150,000+", label: "Community members" },
       { value: "70+", label: "Events conducted" },
       { value: "50+", label: "Companies partnered" },
     ],
@@ -225,12 +237,16 @@ export const team: Person[] = [
 export const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "What does Geek Room do?",
-    a: "Geek Room helps companies reach and engage a community of 1,50,000+ developers through hackathons, meetups, roadshows, campaigns, speaker sessions and dedicated promotions. We also run skills-based hiring challenges so teams can evaluate talent by what they can build.",
+    a: "Geek Room helps companies reach and engage a global community of 150,000+ developers, founders and engineers through hackathons, meetups, roadshows, campaigns, speaker sessions and dedicated promotions. We also run skills-based hiring challenges so teams can evaluate talent by what they can build.",
   },
   {
     q: "How do we join Geek Room?",
     a: "Follow us on LinkedIn and Instagram and register for any of our upcoming events. Every event is an open door into the community.",
     link: { href: site.socials.linktree, label: "Join Geek Room" },
+  },
+  {
+    q: "Can I join from outside India?",
+    a: "Yes. Our global hackathons and vibe-a-thons run online and are open to builders anywhere in the world. In-person finales and meetups happen at partner offices.",
   },
   {
     q: "How much do we charge for events?",
@@ -244,8 +260,8 @@ export const faqs: { q: string; a: string; link?: { href: string; label: string 
 
 export const stats = [
   { value: 4.5, suffix: "★", label: "Average event rating", decimals: 1 },
-  { value: 400, suffix: "+", label: "Colleges" },
-  { value: 80, suffix: "+", label: "Companies" },
+  { value: 70, suffix: "+", label: "Events run" },
+  { value: 80, suffix: "+", label: "Partner companies" },
 ];
 
 export const milestones = [
@@ -256,6 +272,8 @@ export const milestones = [
   { date: "Sept 2024", short: "Mastercard hackathon", text: "Landed our first exclusive hackathon with Mastercard." },
   { date: "Nov 2024", short: "Hire-A-Thon", text: "Ran our first hiring hackathon with InvoLead and launched Geek Suite, our community for professionals." },
   { date: "Feb 2025", short: "Code Kshetra 2.0", text: "Organised Code Kshetra 2.0 with Groq: 14,500+ applications for 150 spots, making it one of North India's biggest hackathons." },
+  { date: "Mar 2025", short: "Going global", text: "Ran our first global hackathon with Pears Technology: online, free to enter and open to builders worldwide, with a $5,000 prize pool." },
+  { date: "May 2025", short: "Vibe-a-thon", text: "Launched Vibe-a-thon, an online vibe-coding jam for builders anywhere, followed by a ten-hour second edition with Omnidimension in June." },
   { date: "Sept 2025", short: "CC 5.0 in Bengaluru", text: "Code Cubicle 5.0 drew 3,741 registrations to a finale at Microsoft Bengaluru, taking the series past 25,000 registrations over five editions." },
   { date: "Apr 2026", short: "HackBLR", text: "HackBLR put 1,500+ people in one room in Bengaluru, from 100+ companies and 50+ colleges." },
   { date: "Aug 2026", short: "AI Race Month", text: "AI Race Month brought 500+ teams from 175+ colleges to a GrandPrix finale at Paytm Noida." },
@@ -265,9 +283,9 @@ export const milestones = [
 /** Headline achievements that circle the 3D mark in the hero. `short` is used on small screens. */
 export const achievements = [
   { value: "150K+", label: "builders in the community", short: "builders" },
-  { value: "400+", label: "colleges", short: "colleges" },
+  { value: "70+", label: "events run", short: "events" },
   { value: "80+", label: "partner companies", short: "companies" },
-  { value: "20+", label: "campus chapters", short: "chapters" },
+  { value: "100+", label: "companies at HackBLR", short: "at HackBLR" },
   { value: "25K+", label: "Code Cubicle registrations", short: "CC regs" },
   { value: "14.5K+", label: "Code Kshetra 2.0 applications", short: "CK apps" },
   { value: "3.7K+", label: "builders at Code Cubicle 6.0", short: "CC 6.0" },
@@ -304,13 +322,40 @@ export const reviews = [
   },
 ];
 
+/** Participant quotes for the home page marquee, drawn from the hacker reviews. */
+export const participantTestimonials: Testimonial[] = reviews.map((r) => ({ role: r.title, quote: r.body }));
+
+/** Home page testimonials: partner and industry voices are highlighted; participant quotes run in the marquee. */
+export type Testimonial = { quote: string; role: string; name?: string; image?: string };
+
+export const corporateTestimonials: Testimonial[] = [
+  {
+    name: "Ankur Arora",
+    role: "Vice President, Mastercard AI Garage",
+    image: "/images/testimonials/ankur-arora.jpg",
+    quote: "The execution was top-notch. The Geek Room team maintains a genuinely high standard of quality across every part of the event.",
+  },
+  {
+    name: "Siddharth Chugh",
+    role: "Azure Engineer, Microsoft",
+    image: "/images/testimonials/siddharth-chugh.jpg",
+    quote: "The innovation is what makes Geek Room different from other organisers. The sense of belonging among participants and the connections they build are unmatched.",
+  },
+  {
+    name: "Abhijit Kar",
+    role: "Professor, PhysicsWallah",
+    image: "/images/testimonials/abhijit-kar.jpg",
+    quote: "They manage hackathons really well. I've been part of several hackathons, but Geek Room's organisation is commendable.",
+  },
+];
+
 /** Headline numbers used in the impact band (all taken from Geek Room's own figures). */
 export const impact = [
   { value: 150000, suffix: "+", label: "Builders in the community" },
   { value: 25000, suffix: "+", label: "Code Cubicle registrations across the first five editions" },
   { value: 14500, suffix: "+", label: "Applications for Code Kshetra 2.0" },
   { value: 3700, suffix: "+", label: "Builders registered for Code Cubicle 6.0" },
-  { value: 400, suffix: "+", label: "Colleges" },
+  { value: 80, suffix: "+", label: "Partner companies, from AI labs to global brands" },
 ];
 
 export const pillars = ["Learn", "Connect", "Grow", "Build in public", "Ship", "Hack"];

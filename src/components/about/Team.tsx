@@ -38,7 +38,7 @@ export default function Team() {
             The people <em>behind</em> the room
           </>
         }
-        intro="The team that turned a group chat into a nationwide community."
+        intro="The team that turned a group chat into a global community."
       />
 
       <div className="mt-14 flex flex-wrap justify-center gap-x-4 gap-y-10">
