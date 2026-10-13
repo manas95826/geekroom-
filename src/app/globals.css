@@ -137,7 +137,31 @@ body {
   @apply btn border border-line-strong text-paper hover:border-paper;
 }
 
+/* Testimonials marquee: the track holds its list four times, so -25% lands on a seamless repeat */
+.testimonial-mask {
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.testimonial-track {
+  animation: testimonial-scroll 45s linear infinite;
+}
+.testimonial-row:hover .testimonial-track {
+  animation-play-state: paused;
+}
+@keyframes testimonial-scroll {
+  to {
+    transform: translateX(-25%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  /* No drift: let the rows scroll by hand instead */
+  .testimonial-track {
+    animation: none !important;
+  }
+  .testimonial-row {
+    overflow-x: auto;
+  }
+
   *,
   *::before,
   *::after {

@@ -42,7 +42,7 @@ export default function Partners() {
             Partners who <em>back</em> the build
           </>
         }
-        intro="AI labs, fintech and developer tooling teams that power Geek Room hackathons and meetups."
+        intro="Global AI labs, fintech and developer-tool companies that power Geek Room hackathons and meetups."
       />
 
       <div data-wall className="grid grid-cols-3 overflow-hidden border-t border-l border-line [perspective:900px] sm:grid-cols-4">

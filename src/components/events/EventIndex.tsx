@@ -3,13 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { eventsByDate, formatChip, type EventKind } from "@/data/events";
+import { useSearchParams } from "next/navigation";
+import { eventKinds, eventsByDate, formatChip, inKind, kindLabel, kindSlug, type EventKind } from "@/data/events";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
 import { useLenis } from "@/components/motion/SmoothScroll";
 
 type Filter = "All" | EventKind;
-const filters: Filter[] = ["All", "Hackathon", "Meetup", "Hiring"];
+const filters: Filter[] = ["All", ...eventKinds];
+
+/** Footer links open the index pre-filtered with `?category=<kind slug>`. */
+const fromParam = (param: string | null): Filter => eventKinds.find((k) => kindSlug(k) === param) ?? "All";
 
 const asc = [...eventsByDate].reverse();
 const t0 = new Date(`${asc[0].iso}T00:00:00`).getTime();
@@ -27,16 +31,18 @@ const span = [asc[0], asc[asc.length - 1]].map((e) => {
  * Rows draw their rule and lift their text as they scroll in; on pointer devices a
  * slash-cut preview of the event follows the cursor.
  */
-export default function EventIndex() {
+export default function EventIndex({ category = null }: { category?: string | null }) {
   const root = useRef<HTMLDivElement>(null);
   const preview = useRef<HTMLDivElement>(null);
   const lenis = useLenis();
-  const [filter, setFilter] = useState<Filter>("All");
+  const [filter, setFilter] = useState<Filter>(() => fromParam(category));
+  // Follow footer links that change the category while this page is already open
+  useEffect(() => setFilter(fromParam(category)), [category]);
   const [hovered, setHovered] = useState<string | null>(null);
   const [axisHover, setAxisHover] = useState<string | null>(null);
 
   const items = useMemo(
-    () => (filter === "All" ? eventsByDate : eventsByDate.filter((e) => e.kind === filter)),
+    () => (filter === "All" ? eventsByDate : eventsByDate.filter((e) => inKind(e, filter))),
     [filter],
   );
   const visible = new Set(items.map((e) => e.slug));
@@ -175,7 +181,7 @@ export default function EventIndex() {
       {/* Filters */}
       <div role="group" aria-label="Filter events" className="mt-10 flex flex-wrap gap-x-8 gap-y-2">
         {filters.map((f) => {
-          const count = f === "All" ? eventsByDate.length : eventsByDate.filter((e) => e.kind === f).length;
+          const count = f === "All" ? eventsByDate.length : eventsByDate.filter((e) => inKind(e, f)).length;
           const active = filter === f;
           return (
             <button
@@ -230,7 +236,7 @@ export default function EventIndex() {
                     {e.title}
                   </span>
                   <span className="mt-1 block text-sm text-muted group-hover:text-ink/70 md:hidden">
-                    {e.code} · {e.kind} · {chip.label}
+                    {e.code} · {kindLabel(e)} · {chip.label}
                   </span>
                 </span>
                 {/* Mobile thumbnail */}
@@ -244,7 +250,7 @@ export default function EventIndex() {
                 </span>
                 <span className="relative hidden overflow-hidden md:block">
                   <span data-lift className="block text-sm text-muted group-hover:text-ink/70">
-                    {e.kind}
+                    {kindLabel(e)}
                   </span>
                 </span>
                 <span className="relative hidden overflow-hidden text-right md:block">
@@ -272,4 +278,9 @@ export default function EventIndex() {
       </div>
     </div>
   );
+}
+
+/** Reads `?category=` from the URL. Render inside Suspense, with a plain <EventIndex /> as the fallback. */
+export function EventIndexFromUrl() {
+  return <EventIndex category={useSearchParams().get("category")} />;
 }

@@ -178,7 +178,7 @@ export default function ContactForm() {
               name="org"
               maxLength={150}
               autoComplete="organization"
-              placeholder="Company, college or community"
+              placeholder="Company, startup or community"
               className={`${field} mt-2`}
             />
           </label>

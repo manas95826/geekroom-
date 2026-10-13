@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { barcode, formatChip, type EventItem } from "@/data/events";
+import { barcode, formatChip, kindLabel, type EventItem } from "@/data/events";
 
 /** Slash angle of the </> mark, reused for the image cut. */
 const SLASH = "polygon(0 0, 100% 0, 84% 100%, 0 100%)";
@@ -41,17 +41,31 @@ export default function EventTicket({
               { "--cut": SLASH, "--cut-v": SLASH_V } as React.CSSProperties
             }
           >
+            {/* Most covers are posters, so show the whole image over a blurred fill of itself */}
             <Image
               src={event.image}
-              alt={event.title}
+              alt=""
+              aria-hidden
               fill
-              priority={priority}
-              sizes="(min-width: 768px) 360px, 90vw"
-              className="object-cover"
+              sizes="120px"
+              className="scale-125 object-cover opacity-70 blur-2xl"
             />
+            {/* Kept clear of the slash so no part of the poster is cut away */}
+            <div className="absolute inset-0 bottom-[16%] p-3 pt-12 @2xl:bottom-0 @2xl:right-[16%] @2xl:py-12">
+              <div className="relative h-full w-full">
+                <Image
+                  src={event.image}
+                  alt={event.title}
+                  fill
+                  priority={priority}
+                  sizes="(min-width: 768px) 360px, 90vw"
+                  className="object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                />
+              </div>
+            </div>
           </div>
           <span className="absolute left-4 top-4 rounded-full bg-ink px-3 py-1.5 font-mono text-xs text-paper">
-            {event.kind}
+            {kindLabel(event)}
           </span>
         </div>
 

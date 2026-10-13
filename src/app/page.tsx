@@ -5,7 +5,7 @@ import Impact from "@/components/home/Impact";
 import Story from "@/components/home/Story";
 import Speakers from "@/components/home/Speakers";
 import Partners from "@/components/home/Partners";
-import Voices from "@/components/home/Voices";
+import Testimonials from "@/components/home/Testimonials";
 import Faq from "@/components/home/Faq";
 // import JoinCta from "@/components/ui/JoinCta";
 
@@ -19,7 +19,7 @@ export default function Home() {
       <Story />
       <Speakers />
       <Partners />
-      <Voices />
+      <Testimonials />
       <Faq />
       {/* <JoinCta /> */}
     </>

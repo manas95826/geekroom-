@@ -1,9 +1,16 @@
-export type EventKind = "Hackathon" | "Meetup" | "Hiring";
+/** Event categories, in the order they appear in filters and the footer. */
+export const eventKinds = ["Hackathon", "Global Hackathon", "Vibe-a-thon", "Meetup", "Hiring"] as const;
+export type EventKind = (typeof eventKinds)[number];
+
+/** URL-safe form of a category, used for `/event?category=…` links. */
+export const kindSlug = (kind: EventKind) => kind.toLowerCase().replace(/\s+/g, "-");
 
 export type EventItem = {
   slug: string;
   title: string;
   kind: EventKind;
+  /** Further categories the event also belongs to, e.g. a hackathon that doubled as a hiring drive */
+  alsoIn?: EventKind[];
   /** ISO date (yyyy-mm-dd) used for sorting and the date chip */
   iso: string;
   city: string;
@@ -22,6 +29,108 @@ export type EventItem = {
 };
 
 export const events: EventItem[] = [
+  {
+    slug: "meetup3",
+    kind: "Meetup",
+    iso: "2026-05-10",
+    city: "Gurugram",
+    code: "GGN",
+    title: "Geek Room Meetup #3",
+    date: "10 May 2026",
+    location: "Nagarro Corporate Office, Sector 18, Gurugram",
+    image: "/images/events/meetup-3.jpg",
+    register: { label: "Event page", url: "https://luma.com/uza47084" },
+    description: [
+      "The third edition of the Geek Room Meetup took over the Nagarro office in Gurugram on 10 May.",
+      "Developers, designers, students and founders came together for talks, product showcases and networking, with a few surprises along the way.",
+    ],
+  },
+  {
+    slug: "vibeathon2",
+    kind: "Vibe-a-thon",
+    iso: "2025-06-29",
+    city: "Online",
+    code: "WEB",
+    title: "Vibe-a-thon 2.0",
+    date: "29 June 2025",
+    location: "Online, worldwide",
+    image: "/images/events/vibe-a-thon-2.jpg",
+    register: { label: "Event page", url: "https://luma.com/vn8yatnt" },
+    tagline: "Code the vibe. Build the future. Again.",
+    highlights: [
+      "10-hour online coding jam, open to builders worldwide",
+      "Live surprise problem statements from Omnidimension",
+      "Solo builds with any AI tool: Trae, Cursor, Windsurf, Copilot",
+      "$500+ in cash prizes",
+    ],
+    description: [
+      "Vibe-a-thon is Geek Room's signature online coding jam, open to builders anywhere in the world, where the only rule is to build with vibe. The second edition stretched it to ten hours of real-time building.",
+      "Omnidimension, a voice AI platform, set live surprise problem statements, and each builder coded solo with whatever AI tools fuelled their flow, in a high-energy, music-driven room.",
+    ],
+  },
+  {
+    slug: "meetup1",
+    kind: "Meetup",
+    iso: "2025-06-28",
+    city: "Noida",
+    code: "NOI",
+    title: "Geek Room Meetup #1",
+    date: "28 June 2025",
+    location: "OpsTree Solutions, Sector 126, Noida",
+    image: "/images/events/meetup-1.jpg",
+    register: { label: "Event page", url: "https://luma.com/m20tn1s7" },
+    description: [
+      "The first edition of the Geek Room Meetup, held at the OpsTree Solutions office in Noida.",
+      "It started the meetup series that has since moved through Microsoft and Nagarro offices in Gurugram.",
+    ],
+  },
+  {
+    slug: "vibeathon1",
+    kind: "Vibe-a-thon",
+    iso: "2025-05-25",
+    city: "Online",
+    code: "WEB",
+    title: "Vibe-a-thon 1.0",
+    date: "25 May 2025",
+    location: "Online, worldwide",
+    image: "/images/events/vibe-a-thon-1.jpg",
+    register: { label: "Event page", url: "https://luma.com/o135s404" },
+    tagline: "Code the vibe. Build the future.",
+    highlights: [
+      "Online and open to builders anywhere",
+      "Surprise problem statements revealed live",
+      "Individual vibe-coding sessions",
+      "Any AI tool allowed: Cursor, Windsurf, Copilot",
+      "₹10K+ in cash prizes",
+    ],
+    description: [
+      "The first Vibe-a-thon was a one-of-a-kind coding jam where energy meets innovation: less a regular hackathon, more a vibe-coding session where the rhythm of creativity takes over.",
+      "Builders got on-the-spot problem statements and shipped quirky apps, smart automations and GenAI tools in real time, with music, caffeine and code in the true spirit of Geek Room.",
+    ],
+  },
+  {
+    slug: "pears",
+    kind: "Global Hackathon",
+    iso: "2025-03-02",
+    city: "Online",
+    code: "GLB",
+    title: "Pears Global Hackathon",
+    date: "2–9 March 2025",
+    location: "Online, worldwide",
+    image: "/images/events/pears-global-hackathon.jpg",
+    register: { label: "Event page", url: "https://luma.com/9mqll98a" },
+    tagline: "Peer-to-peer, built worldwide",
+    highlights: [
+      "Global online hackathon, free and open worldwide",
+      "Every project built on Pears technology",
+      "$5,000 prize pool, plus tablets and AirPods",
+      "Two judging rounds: 2 and 9 March",
+    ],
+    description: [
+      "Pears Hackathon 2025 was a global online hackathon run by Geek Room with Pears Technology, open to students, professionals and anyone passionate about building.",
+      "Every project had to integrate Pears' peer-to-peer technology. Teams submitted on DoraHacks for the first round on 2 March, and the final judging round ran on 9 March, with expert mentorship throughout.",
+    ],
+  },
   {
     slug: "cc6.0",
     kind: "Hackathon",
@@ -72,6 +181,7 @@ export const events: EventItem[] = [
   {
     slug: "hacksmart",
     kind: "Hackathon",
+    alsoIn: ["Hiring"],
     iso: "2026-01-31",
     city: "Gurugram",
     code: "GGN",
@@ -85,9 +195,10 @@ export const events: EventItem[] = [
       "200+ builders shortlisted",
       "24-hour build sprint",
       "Battery intelligence, EV operations and cloud problem statements",
+      "Doubled as a hiring hackathon",
     ],
     description: [
-      "HackSmart was Battery Smart's first tech hackathon, run with AWS, and an industry-sponsored challenge in the Geek Room portfolio.",
+      "HackSmart was Battery Smart's first tech hackathon, run with AWS: an industry-sponsored challenge that doubled as a hiring hackathon, so builders were evaluated on what they shipped rather than on a CV.",
       "Engineering students from IITs, BITS, NITs and other campuses worked on real clean-mobility problems with mentors from Battery Smart and AWS, before demo-led judging by Battery Smart's leadership picked the top five teams.",
     ],
   },
@@ -344,6 +455,12 @@ export const events: EventItem[] = [
     ],
   },
 ];
+
+/** Whether an event belongs to a category, as its main kind or a secondary one. */
+export const inKind = (e: EventItem, kind: EventKind) => e.kind === kind || !!e.alsoIn?.includes(kind);
+
+/** All of an event's categories for display, main kind first: "Hackathon · Hiring". */
+export const kindLabel = (e: EventItem) => [e.kind, ...(e.alsoIn ?? [])].join(" · ");
 
 /** Events sorted newest first */
 export const eventsByDate = [...events].sort((a, b) => b.iso.localeCompare(a.iso));

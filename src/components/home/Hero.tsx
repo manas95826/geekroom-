@@ -100,8 +100,8 @@ export default function Hero() {
           </h1>
 
           <p data-fadeup className="mt-8 max-w-[31rem] text-lg leading-relaxed text-muted">
-            Geek Room runs hackathons, meetups and hiring challenges where 150K+ builders across 400+ colleges
-            learn, connect and build in public.
+            Geek Room is a global community of 150K+ builders, where developers, founders and 80+ partner companies
+            hack, meet and build in public, online and in person.
           </p>
 
           <div data-fadeup className="mt-9 flex flex-wrap gap-3">
