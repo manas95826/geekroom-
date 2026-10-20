@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, type ReactNode } from "react";
+import { useActionState, useEffect, type ReactNode } from "react";
 import DotField from "@/components/ui/DotField";
 import GeekMark from "@/components/ui/GeekMark";
 import { Field, FormError, SubmitButton, inputCls } from "./Dialog";
@@ -24,8 +24,19 @@ export function AuthFrame({ heading, sub, children }: { heading: ReactNode; sub:
   );
 }
 
+/**
+ * Server-action redirects render their target without passing through the middleware,
+ * which would serve the marketing home page on the track host. A full navigation avoids that.
+ */
+function useGoHomeOnSuccess(state: FormState) {
+  useEffect(() => {
+    if (state?.ok) window.location.assign("/");
+  }, [state]);
+}
+
 export function LoginForm() {
   const [state, action, pending] = useActionState<FormState, FormData>(login, undefined);
+  useGoHomeOnSuccess(state);
   return (
     <form action={action} className="space-y-4">
       <Field label="Email">
@@ -35,13 +46,14 @@ export function LoginForm() {
         <input name="password" type="password" required autoComplete="current-password" className={inputCls} />
       </Field>
       <FormError error={state?.error} />
-      <SubmitButton pending={pending}>Sign in</SubmitButton>
+      <SubmitButton pending={pending || Boolean(state?.ok)}>Sign in</SubmitButton>
     </form>
   );
 }
 
 export function SetupForm({ needsKey }: { needsKey: boolean }) {
   const [state, action, pending] = useActionState<FormState, FormData>(setupOwner, undefined);
+  useGoHomeOnSuccess(state);
   return (
     <form action={action} className="space-y-4">
       {needsKey && (
@@ -62,13 +74,14 @@ export function SetupForm({ needsKey }: { needsKey: boolean }) {
         <input name="password" type="password" required minLength={8} autoComplete="new-password" className={inputCls} />
       </Field>
       <FormError error={state?.error} />
-      <SubmitButton pending={pending}>Create workspace</SubmitButton>
+      <SubmitButton pending={pending || Boolean(state?.ok)}>Create workspace</SubmitButton>
     </form>
   );
 }
 
 export function InviteForm({ token, email }: { token: string; email: string }) {
   const [state, action, pending] = useActionState<FormState, FormData>(acceptInvite, undefined);
+  useGoHomeOnSuccess(state);
   return (
     <form action={action} className="space-y-4">
       <input type="hidden" name="token" value={token} />
@@ -79,7 +92,7 @@ export function InviteForm({ token, email }: { token: string; email: string }) {
         <input name="password" type="password" required minLength={8} autoComplete="new-password" className={inputCls} />
       </Field>
       <FormError error={state?.error} />
-      <SubmitButton pending={pending}>Join the team</SubmitButton>
+      <SubmitButton pending={pending || Boolean(state?.ok)}>Join the team</SubmitButton>
     </form>
   );
 }

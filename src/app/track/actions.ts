@@ -4,7 +4,6 @@ import { createHash, randomBytes } from "node:crypto";
 import bcrypt from "bcryptjs";
 import { and, eq, gt, sql } from "drizzle-orm";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/track/db";
 import { activities, comments, projects, tasks, users, worklogs, type Tier, type TaskStatus } from "@/lib/track/schema";
@@ -75,7 +74,7 @@ export async function setupOwner(_: FormState, fd: FormData): Promise<FormState>
     .returning();
   await db.insert(activities).values({ actorId: user.id, kind: "joined", subjectId: user.id });
   await startSession(user.id);
-  redirect("/");
+  return { ok: true };
 }
 
 export async function login(_: FormState, fd: FormData): Promise<FormState> {
@@ -87,12 +86,11 @@ export async function login(_: FormState, fd: FormData): Promise<FormState> {
   const ok = await bcrypt.compare(password, hash);
   if (!user || !user.passwordHash || !ok || !user.active) return { error: "Wrong email or password." };
   await startSession(user.id);
-  redirect("/");
+  return { ok: true };
 }
 
 export async function logout() {
   await endSession();
-  redirect("/login");
 }
 
 export async function acceptInvite(_: FormState, fd: FormData): Promise<FormState> {
@@ -110,7 +108,7 @@ export async function acceptInvite(_: FormState, fd: FormData): Promise<FormStat
     .where(eq(users.id, user.id));
   await db.insert(activities).values({ actorId: user.id, kind: "joined", subjectId: user.id });
   await startSession(user.id);
-  redirect("/");
+  return { ok: true };
 }
 
 /* ---------- People ---------- */
@@ -328,14 +326,15 @@ export async function updateTask(id: number, patch: TaskPatch): Promise<FormStat
   return { ok: true };
 }
 
-export async function deleteTask(id: number) {
+/** Returns where to go next; the client navigates so the request goes through the subdomain middleware. */
+export async function deleteTask(id: number): Promise<{ error?: string; next?: string }> {
   const actor = await requireUser();
   const task = await db.query.tasks.findFirst({ where: eq(tasks.id, id) });
-  if (!task) return;
-  if (actor.tier !== "core" && task.creatorId !== actor.id) return;
+  if (!task) return { error: "Task not found." };
+  if (actor.tier !== "core" && task.creatorId !== actor.id) return { error: "Only core or the creator can delete this task." };
   await db.delete(tasks).where(eq(tasks.id, id));
   refresh();
-  redirect(task.parentId ? `/tasks/${task.parentId}` : "/tasks");
+  return { next: task.parentId ? `/tasks/${task.parentId}` : "/tasks" };
 }
 
 export async function addComment(_: FormState, fd: FormData): Promise<FormState> {

@@ -129,11 +129,17 @@ export default function TrackShell({
               <TierBadge tier={me.tier} />
             </span>
           </Link>
-          <form action={logout}>
-            <button aria-label="Sign out" title="Sign out" className="rounded-md p-2 text-subtle hover:bg-ink-3 hover:text-paper">
-              <LogOut className="size-4" />
-            </button>
-          </form>
+          <button
+            onClick={async () => {
+              await logout();
+              window.location.assign("/login");
+            }}
+            aria-label="Sign out"
+            title="Sign out"
+            className="rounded-md p-2 text-subtle hover:bg-ink-3 hover:text-paper"
+          >
+            <LogOut className="size-4" />
+          </button>
         </div>
       </div>
     </div>

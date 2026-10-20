@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useOptimistic, useRef, useState, useTransition } from "react";
 import { Clock3, CornerDownRight, Plus, Trash2 } from "lucide-react";
 import Avatar from "./Avatar";
@@ -64,6 +65,7 @@ export function TaskEditor({ task, editable }: { task: Detail; editable: boolean
 
 export function TaskProperties({ task, editable, canDelete }: { task: Detail; editable: boolean; canDelete: boolean }) {
   const { openLogWork } = useTrack();
+  const router = useRouter();
   const [t, apply] = useOptimistic(task, (cur: Detail, p: Partial<Detail>) => ({ ...cur, ...p }));
   const [error, setError] = useState<string | null>(null);
   const [, start] = useTransition();
@@ -113,7 +115,12 @@ export function TaskProperties({ task, editable, canDelete }: { task: Detail; ed
         {canDelete && (
           <button
             onClick={() => {
-              if (confirm("Delete this task and its sub-tasks?")) start(() => deleteTask(task.id));
+              if (!confirm("Delete this task and its sub-tasks?")) return;
+              start(async () => {
+                const r = await deleteTask(task.id);
+                if (r.next) router.push(r.next);
+                else setError(r.error ?? null);
+              });
             }}
             aria-label="Delete task"
             className="grid size-8 place-items-center rounded-md border border-line-strong text-subtle hover:border-orange/60 hover:text-orange"
