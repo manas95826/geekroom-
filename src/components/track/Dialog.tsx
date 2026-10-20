@@ -32,7 +32,7 @@ export default function Dialog({
       onClick={(e) => {
         if (e.target === ref.current) onClose();
       }}
-      className={`m-auto w-[calc(100%-32px)] rounded-xl border border-line-strong bg-ink-2 p-0 text-paper shadow-[0_24px_80px_-16px_rgba(0,0,0,0.9)] backdrop:bg-black/60 backdrop:backdrop-blur-[2px] ${
+      className={`m-auto w-[calc(100%-32px)] overflow-visible rounded-xl border border-line-strong bg-ink-2 p-0 text-paper shadow-[0_24px_80px_-16px_rgba(0,0,0,0.9)] backdrop:bg-black/60 backdrop:backdrop-blur-[2px] ${
         wide ? "max-w-[680px]" : "max-w-[460px]"
       }`}
     >
